@@ -1,5 +1,4 @@
-angular.module('angularPayments')
-
+angular.module('humpback.payments')
 .factory('Cards', [function(){
 
   var defaultFormat = /(\d{1,4})/g;
@@ -87,7 +86,7 @@ angular.module('angularPayments')
 
       num = (num + '').replace(/\D/g, '');
 
-      for (i = 0, len = cards.length; i < len; i++) {
+      for (var i = 0, len = cards.length; i < len; i++) {
 
         card = cards[i];
 
@@ -101,7 +100,7 @@ angular.module('angularPayments')
   var _fromType = function(type) {
       var card, i, len;
 
-      for (i = 0, len = cards.length; i < len; i++) {
+      for (var i = 0, len = cards.length; i < len; i++) {
 
         card = cards[i];
         

@@ -1,5 +1,4 @@
-angular.module('angularPayments')
-
+angular.module('humpback.payments')
 .directive('stripeForm', ['$window', '$parse', 'Common', function($window, $parse, Common) {
     
   // directive intercepts form-submission, obtains Stripe's cardToken using stripe.js
@@ -16,7 +15,7 @@ angular.module('angularPayments')
                     'cvc', 'name','addressLine1', 
                     'addressLine2', 'addressCity',
                     'addressState', 'addressZip',
-                    'addressCountry']
+                    'addressCountry'];
     
     var camelToSnake = function(str){
       return str.replace(/([A-Z])/g, function(m){
@@ -26,7 +25,7 @@ angular.module('angularPayments')
 
     var ret = {};
 
-    for(i in possibleKeys){
+    for(var i in possibleKeys){
         if(data.hasOwnProperty(possibleKeys[i])){
             ret[camelToSnake(possibleKeys[i])] = angular.copy(data[possibleKeys[i]]);
         }
@@ -49,13 +48,13 @@ angular.module('angularPayments')
 
       form.bind('submit', function() {
 
-        expMonthUsed = scope.expMonth ? true : false;
-        expYearUsed = scope.expYear ? true : false;
+        var expMonthUsed = scope.expMonth ? true : false;
+        var expYearUsed = scope.expYear ? true : false;
 
         if(!(expMonthUsed && expYearUsed)){
-          exp = Common.parseExpiry(scope.expiry)
-          scope.expMonth = exp.month
-          scope.expYear = exp.year
+          var exp = Common.parseExpiry(scope.expiry)
+          scope.expMonth = exp.month;
+          scope.expYear = exp.year;
         }
 
         var button = form.find('button');

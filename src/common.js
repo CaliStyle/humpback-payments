@@ -1,5 +1,4 @@
-angular.module('angularPayments')
-
+angular.module('humpback.payments')
 .factory('Common', [function(){
 
   var ret = {};
