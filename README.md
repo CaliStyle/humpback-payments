@@ -177,6 +177,14 @@ then connect to it at http://localhost:8000/example/index.html
 
 Please Edit files in `src/`-folder and before submitting pull request, run grunt to compile and minify files in `lib`-folder.
 
+
+## Changelog
+
+### Version 0.11.1
+Updates to Angular 1.4.2
+Adds JS Hint
+Fixes Firefox Issues
+
 ## License 
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to
