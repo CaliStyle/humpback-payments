@@ -9,7 +9,7 @@ angular.module('humpback.payments')
 
 
   // filter valid stripe-values from scope and convert them from camelCase to snake_case
-  _getDataToSend = function(data){
+  var _getDataToSend = function(data){
            
     var possibleKeys = ['number', 'expMonth', 'expYear', 
                     'cvc', 'name','addressLine1', 
@@ -21,7 +21,7 @@ angular.module('humpback.payments')
       return str.replace(/([A-Z])/g, function(m){
         return "_"+m.toLowerCase();
       });
-    }
+    };
 
     var ret = {};
 
@@ -31,10 +31,10 @@ angular.module('humpback.payments')
         }
     }
 
-    ret['number'] = (ret['number'] || '').replace(/ /g,'');
+    ret.number = (ret.number || '').replace(/ /g,'');
 
     return ret;
-  }
+  };
 
   return {
     restrict: 'A',
@@ -52,7 +52,7 @@ angular.module('humpback.payments')
         var expYearUsed = scope.expYear ? true : false;
 
         if(!(expMonthUsed && expYearUsed)){
-          var exp = Common.parseExpiry(scope.expiry)
+          var exp = Common.parseExpiry(scope.expiry);
           scope.expMonth = exp.month;
           scope.expYear = exp.year;
         }
@@ -64,12 +64,12 @@ angular.module('humpback.payments')
           
 
           $window.Stripe.createToken(_getDataToSend(scope), function() {
+            button.prop('disabled', false);
             var args = arguments;
             scope.$apply(function() {
               scope[attr.stripeForm].apply(scope, args);
             });
-            button.prop('disabled', false);
-
+            
           });
 
         } else {
@@ -84,5 +84,5 @@ angular.module('humpback.payments')
 
       });
     }
-  }
+  };
 }]);

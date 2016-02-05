@@ -82,11 +82,11 @@ angular.module('humpback.payments')
 
 
   var _fromNumber = function(num){
-      var card, i, len;
+      var card, i;
 
       num = (num + '').replace(/\D/g, '');
 
-      for (var i = 0, len = cards.length; i < len; i++) {
+      for (i = 0, cards.length; i < cards.length; i++) {
 
         card = cards[i];
 
@@ -95,12 +95,12 @@ angular.module('humpback.payments')
         }
 
       }
-  }
+  };
 
   var _fromType = function(type) {
-      var card, i, len;
+      var card, i;
 
-      for (var i = 0, len = cards.length; i < len; i++) {
+      for (i = 0, cards.length; i < cards.length; i++) {
 
         card = cards[i];
         
@@ -112,10 +112,10 @@ angular.module('humpback.payments')
   };
 
   return {
-      fromNumber: function(val) { return _fromNumber(val) },
-      fromType: function(val) { return _fromType(val) },
+      fromNumber: function(val) { return _fromNumber(val); },
+      fromType: function(val) { return _fromType(val); },
       defaultFormat: function() { return defaultFormat;},
       defaultInputFormat: function() { return defaultInputFormat;}
-  }
+  };
 
 }])

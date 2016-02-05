@@ -1,16 +1,16 @@
 angular.module('humpback.payments')
 .factory('_Format',['Cards', 'Common', '$filter', function(Cards, Common, $filter){
 
-  var _formats = {}
+  var _formats = {};
 
   var _hasTextSelected = function($target) {
       var ref;
       
-      if (($target.prop('selectionStart') != null) && $target.prop('selectionStart') !== $target.prop('selectionEnd')) {
+      if (($target.prop('selectionStart') !== null) && $target.prop('selectionStart') !== $target.prop('selectionEnd')) {
           return true;
       }
       
-      if (typeof document !== "undefined" && document !== null ? (ref = document.selection) != null ? typeof ref.createRange === "function" ? ref.createRange().text : void 0 : void 0 : void 0) {
+      if (typeof document !== "undefined" && document !== null ? (ref = document.selection) !== null ? typeof ref.createRange === "function" ? ref.createRange().text : void 0 : void 0 : void 0) {
           return true;
       }
       
@@ -48,7 +48,7 @@ angular.module('humpback.payments')
         return;
       }
 
-      if (($target.prop('selectionStart') != null) && $target.prop('selectionStart') !== value.length) {
+      if (($target.prop('selectionStart') !== null) && $target.prop('selectionStart') !== value.length) {
         return;
       }
 
@@ -86,11 +86,11 @@ angular.module('humpback.payments')
       card = Cards.fromNumber(value);
       
       if(card) {
-        if(!(value.length <= card.length[card.length.length - 1])){
+        if(value.length > card.length[card.length.length - 1]){
           e.preventDefault();
         }
       } else {
-        if(!(value.length <= 16)){
+        if(value.length > 16){
           e.preventDefault();
         }
       }
@@ -110,7 +110,7 @@ angular.module('humpback.payments')
         return;
       }
       
-      if(($target.prop('selectionStart') != null) && $target.prop('selectionStart') !== value.length) {
+      if(($target.prop('selectionStart') !== null) && $target.prop('selectionStart') !== value.length) {
         return;
       }
       
@@ -137,15 +137,15 @@ angular.module('humpback.payments')
       num = num.slice(0, +upperLength + 1 || 9e9);
       
       if(card.format.global) {
-        return (ref = num.match(card.format)) != null ? ref.join(' ') : void 0;
+        return (ref = num.match(card.format)) !== null ? ref.join(' ') : void 0;
       } else {
         groups = card.format.exec(num);
           
-        if (groups != null) {
+        if (groups !== null) {
           groups.shift();
         }
 
-        return groups != null ? groups.join(' ') : void 0;
+        return groups !== null ? groups.join(' ') : void 0;
       }
     };
 
@@ -161,10 +161,10 @@ angular.module('humpback.payments')
   };
 
   var _parseCardNumber = function(value) {
-    return value != null ? value.replace(/\s/g, '') : value;
+    return value !== null ? value.replace(/\s/g, '') : value;
   };
 
-  _formats['card'] = function(elem, ctrl){
+  _formats.card = function(elem, ctrl){
     elem.bind('keypress', _restrictCardNumber);
     elem.bind('keypress', _formatCardNumber);
     elem.bind('keydown', _formatBackCardNumber);
@@ -172,26 +172,26 @@ angular.module('humpback.payments')
 
     ctrl.$parsers.push(_parseCardNumber);
     ctrl.$formatters.push(_getFormattedCardNumber);
-  }
+  };
 
 
   // cvc
 
-  _formatCVC = function(e){
-    var $target, digit, value
+  var _formatCVC = function(e){
+    var $target, digit, value;
 
     $target = angular.element(e.currentTarget);
     digit = String.fromCharCode(e.which);
-    value = $target.val()
+    value = $target.val();
 
     // Is control character (arrow keys, delete, enter, etc...)
     function isSystemKey(code) {
-      return code === 8 || code === 0 || code === 13
+      return code === 8 || code === 0 || code === 13;
     }
 
     // Allow normal system keys to work
     if (isSystemKey(e.which) || e.metaKey) {
-      return
+      return;
     }
 
     // Prevent entering non-digit characters
@@ -202,31 +202,31 @@ angular.module('humpback.payments')
 
     // Prevent entering more than 4 characters unless you have selected text
     if ((value + digit).length > 4 && ! _hasTextSelected($target)) {
-      e.preventDefault()
-      return
+      e.preventDefault();
+      return;
     }
-  }
+  };
 
-  _pasteCVC = function(e) {
+  var _pasteCVC = function(e) {
     return setTimeout(function() {
       var $target, value;
       $target = angular.element(e.target);
 
       value = $target.val();
-      value = value.replace(/[^\d]/g, '').substring(0, 4)
+      value = value.replace(/[^\d]/g, '').substring(0, 4);
 
       return $target.val(value);
     });
-  }
+  };
 
-  _formats['cvc'] = function(elem){
-    elem.bind('keypress', _formatCVC)
-    elem.bind('paste', _pasteCVC)
-  }
+  _formats.cvc = function(elem){
+    elem.bind('keypress', _formatCVC);
+    elem.bind('paste', _pasteCVC);
+  };
 
   // expiry
 
-  _restrictExpiry = function(e) {
+  var _restrictExpiry = function(e) {
     var $target, digit, value;
     
     $target = angular.element(e.currentTarget);
@@ -245,12 +245,12 @@ angular.module('humpback.payments')
     value = value.replace(/\D/g, '');
     
     if (value.length > 6) {
-      e.preventDefault()
+      e.preventDefault();
       return;
     }
   };
 
-  _formatExpiry = function(e) {
+  var _formatExpiry = function(e) {
     var $target, digit, val;
     
     digit = String.fromCharCode(e.which);
@@ -274,7 +274,7 @@ angular.module('humpback.payments')
     }
   };
 
-  _formatForwardExpiry = function(e) {
+  var _formatForwardExpiry = function(e) {
     var $target, digit, val;
     
     digit = String.fromCharCode(e.which);
@@ -291,7 +291,7 @@ angular.module('humpback.payments')
     }
   };
 
-  _formatForwardSlash = function(e) {
+  var _formatForwardSlash = function(e) {
     var $target, slash, val;
     
     slash = String.fromCharCode(e.which);
@@ -308,7 +308,7 @@ angular.module('humpback.payments')
     }
   };
 
-  _formatBackExpiry = function(e) {
+  var _formatBackExpiry = function(e) {
     var $target, value;
     
     if (e.meta) {
@@ -322,7 +322,7 @@ angular.module('humpback.payments')
       return;
     }
     
-    if (($target.prop('selectionStart') != null) && $target.prop('selectionStart') !== value.length) {
+    if (($target.prop('selectionStart') !== null) && $target.prop('selectionStart') !== value.length) {
       return;
     }
     
@@ -338,7 +338,7 @@ angular.module('humpback.payments')
   };
 
   var _parseExpiry = function(value) {
-    if(value != null) {
+    if(value !== null) {
       var obj = Common.parseExpiry(value);
       var expiry = new Date(obj.year, obj.month-1);
       return $filter('date')(expiry, 'MM/yyyy');
@@ -347,7 +347,7 @@ angular.module('humpback.payments')
   };
 
   var _getFormattedExpiry = function(value) {
-    if(value != null) {
+    if(value !== null) {
       var obj = Common.parseExpiry(value);
       var expiry = new Date(obj.year, obj.month-1);
       return $filter('date')(expiry, 'MM / yyyy');
@@ -356,7 +356,7 @@ angular.module('humpback.payments')
   };
 
 
-  _formats['expiry'] = function(elem, ctrl){
+  _formats.expiry = function(elem, ctrl){
     elem.bind('keypress', _restrictExpiry);
     elem.bind('keypress', _formatExpiry);
     elem.bind('keypress', _formatForwardSlash);
@@ -365,20 +365,20 @@ angular.module('humpback.payments')
 
     ctrl.$parsers.push(_parseExpiry);
     ctrl.$formatters.push(_getFormattedExpiry);
-  }
+  };
 
   return function(type, elem, ctrl){
     if(!_formats[type]){
 
-      types = Object.keys(_formats);
+      var types = Object.keys(_formats);
 
-      errstr  = 'Unknown type for formatting: "'+type+'". ';
+      var errstr  = 'Unknown type for formatting: "'+type+'". ';
       errstr += 'Should be one of: "'+types.join('", "')+'"';
 
       throw errstr;
     }
     return _formats[type](elem, ctrl);
-  }
+  };
 
 }])
 
@@ -389,5 +389,5 @@ angular.module('humpback.payments')
       link: function(scope, elem, attr, ctrl){
         _Format(attr.paymentsFormat, elem, ctrl);
       }
-    }
+    };
 }])

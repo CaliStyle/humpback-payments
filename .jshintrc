@@ -1,0 +1,11 @@
+{
+  "curly": false,
+  "eqeqeq": true,
+  "globals": {
+    "angular": true
+  },
+  "undef": true,
+  "browser": true,
+  "devel": true,
+  "asi": true
+}
