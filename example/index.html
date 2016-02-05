@@ -10,14 +10,14 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
     
-    <script src="../lib/humpback-payments.min.js"></script>
+    <script src="../lib/humpback-payments.js"></script>
     
     <script>
 
 
     Stripe.setPublishableKey('fillMePlease')
 
-    angular.module('app', ['angularPayments'])
+    angular.module('app', ['humpback.payments'])
 
     MainController = function($scope){
       $scope.handleStripe = function(status, response){

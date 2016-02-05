@@ -36,7 +36,12 @@ angular.module('humpback.payments')
       var ref, ref1;
 
       // valid if empty - let ng-required handle empty
-      if(cvc === null || cvc.length === 0) return true;
+      if(!cvc){ 
+        return true;
+      }
+      if(cvc.length === 0){ 
+        return true;
+      }
 
       if (!/^\d+$/.test(cvc)) {
         return false;
@@ -70,7 +75,7 @@ angular.module('humpback.payments')
       };
 
       // valid if empty - let ng-required handle empty
-      if(num === null || num.length === 0){
+      if(num === null || num !== 'undefined' || num.length === 0){
         clearCard();
         return true;
       }
