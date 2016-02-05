@@ -8,27 +8,29 @@
 
     <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
     
     <script src="../lib/humpback-payments.js"></script>
     
     <script>
 
 
-    Stripe.setPublishableKey('fillMePlease')
+    //Stripe.setPublishableKey('fillMePlease');
 
     angular.module('app', ['humpback.payments'])
-
-    MainController = function($scope){
+    .controller('MainController', function($scope){
       $scope.handleStripe = function(status, response){
         if(response.error) {
+          console.log(response);
           // there was an error. Fix it.
         } else {
           // got stripe token, now charge it or smt
+          console.log(response);
           token = response.id
+
         }
       }
-    }
+    });
 
     </script>
 

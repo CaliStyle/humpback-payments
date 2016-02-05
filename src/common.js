@@ -9,6 +9,10 @@ angular.module('humpback.payments')
 
     value = value || '';
 
+    if(typeof value !== 'string') {
+        throw new Error('Only string parameter supported for Expiry!');
+    }
+
     value = value.replace(/\s/g, '');
     _ref = value.split('/', 2); 
     month = _ref[0]; 

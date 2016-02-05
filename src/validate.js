@@ -108,7 +108,12 @@ angular.module('humpback.payments')
   _validators.expiry = function(val){
     var obj, currentTime, expiry, prefix;
     // valid if empty - let ng-required handle empty
-    if(val === null || val.length === 0) return true;
+    if(!val){
+      return true;
+    }
+    if(val.length === 0) {
+      return true;
+    }
 
     obj = Common.parseExpiry(val);
 

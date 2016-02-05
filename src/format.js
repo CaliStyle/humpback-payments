@@ -6,11 +6,11 @@ angular.module('humpback.payments')
   var _hasTextSelected = function($target) {
       var ref;
       
-      if (($target.prop('selectionStart') !== null) && $target.prop('selectionStart') !== $target.prop('selectionEnd')) {
+      if (($target.prop('selectionStart')) && $target.prop('selectionStart') !== $target.prop('selectionEnd')) {
           return true;
       }
       
-      if (typeof document !== "undefined" && document !== null ? (ref = document.selection) !== null ? typeof ref.createRange === "function" ? ref.createRange().text : void 0 : void 0 : void 0) {
+      if (typeof document !== "undefined" && document ? (ref = document.selection) ? typeof ref.createRange === "function" ? ref.createRange().text : void 0 : void 0 : void 0) {
           return true;
       }
       
@@ -322,7 +322,7 @@ angular.module('humpback.payments')
       return;
     }
     
-    if (($target.prop('selectionStart') !== null) && $target.prop('selectionStart') !== value.length) {
+    if (($target.prop('selectionStart')) && $target.prop('selectionStart') !== value.length) {
       return;
     }
     
@@ -338,7 +338,7 @@ angular.module('humpback.payments')
   };
 
   var _parseExpiry = function(value) {
-    if(value !== null) {
+    if(value) {
       var obj = Common.parseExpiry(value);
       var expiry = new Date(obj.year, obj.month-1);
       return $filter('date')(expiry, 'MM/yyyy');
@@ -347,7 +347,7 @@ angular.module('humpback.payments')
   };
 
   var _getFormattedExpiry = function(value) {
-    if(value !== null) {
+    if(value) {
       var obj = Common.parseExpiry(value);
       var expiry = new Date(obj.year, obj.month-1);
       return $filter('date')(expiry, 'MM / yyyy');
